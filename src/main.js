@@ -1,12 +1,15 @@
 import { fetchData } from "./services/apiService.js";
+import { Country } from "./models/Country.js";
 fetchData()
     .then(data => {
     // const productArray = data.products;
-    // for (let i = 0; i < data.length; i++) {
-    //     const country = new Country(data[i].flags, data[i].name, data[i].currencies, data[i].capital, data[i].region, data[i].subregion, data[i].languages, data[i].border);
-    //     console.log(country.displayDetails());
+    const countryArray = data;
+    // for (let i = 0; i < countryArray.length; i++) {
+    //     const country = new Country(countryArray[i]!.flags, countryArray[i]!.name, countryArray[i]!.currencies, countryArray[i]!.capital, countryArray[i]!.region, countryArray[i]!.subregion, countryArray[i]!.languages, countryArray[i]!.borders);
+    //     console.log(country.displayDetails());            
     // }
-    console.log(data);
+    const country = new Country(countryArray[0].flags, countryArray[0].name, countryArray[0].currencies, countryArray[0].capital, countryArray[0].region, countryArray[0].subregion, countryArray[0].languages, countryArray[0].borders);
+    console.log(country.displayDetails());
 })
     .catch(error => console.error("Fetch error:", error));
 //# sourceMappingURL=main.js.map

@@ -1,6 +1,18 @@
 {
-  "devDependencies": {
+  "name": "project_html_css_javascript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
     "@types/node": "^24.10.1",
-    "typescript": "^5.9.3"
-  }
+    "typescript": "^5.9.3",
+    "undici-types": "^7.16.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module"
 }
