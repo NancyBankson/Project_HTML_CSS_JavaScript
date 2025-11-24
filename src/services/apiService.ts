@@ -12,4 +12,3 @@ export async function fetchData() {
         console.error("Fetch error:", error);
     }
 }
-//# sourceMappingURL=apiService.js.map
