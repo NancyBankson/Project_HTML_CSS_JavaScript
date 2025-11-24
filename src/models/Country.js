@@ -7,7 +7,8 @@ export class Country {
     subregion;
     languages;
     borders;
-    constructor(flags, name, currencies, capital, region, subregion, languages, borders) {
+    population;
+    constructor(flags, name, currencies, capital, region, subregion, languages, borders, population) {
         this.flags = flags;
         this.name = name;
         this.currencies = currencies;
@@ -16,11 +17,12 @@ export class Country {
         this.subregion = subregion;
         this.languages = languages;
         this.borders = borders;
+        this.population = population;
     }
     displayDetails() {
         return `
       Flag: ${this.flags.png}
-      Name: ${this.name}
+      Name: ${this.name.common}
       Region: ${this.region}
       Capital: ${this.capital}`;
     }

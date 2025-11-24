@@ -6,8 +6,9 @@ export declare class Country {
     region: string;
     subregion: string;
     languages: string;
-    borders: string;
-    constructor(flags: flags, name: name, currencies: string[], capital: string[], region: string, subregion: string, languages: string, borders: string);
+    borders: string[];
+    population: number;
+    constructor(flags: flags, name: name, currencies: string[], capital: string[], region: string, subregion: string, languages: string, borders: string[], population: number);
     displayDetails(): string;
 }
 interface flags {
