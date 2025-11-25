@@ -1,47 +1,77 @@
 body {
     font-family: "Nunito Sans", sans-serif;
 }
-header, #search-bar, #card-holder {
+
+#header-container {
+     border: 1px solid transparent;
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.1);
+}
+
+header,
+#search-bar,
+#card-holder {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+
 header {
-    margin: 20px 40px;
+    margin: 20px 60px;
 }
+
 header h1 {
     font-size: 1.25rem;
     font-weight: 800;
 }
+
 main {
     background-color: hsl(0, 0%, 99%);
 }
+
 #search-bar {
-    margin: 20px 40px;
+    margin: 35px 60px;
     padding: 20px 0px 8px;
 }
+
 input {
     padding: 15px 20px;
-    background-color: white;
-    border: none;
+    background-color: hsl(0, 0%, 99%);
     font-size: .8rem;
     min-width: 200px;
+    border: 1px solid transparent;
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.1);
 }
+
 select {
-    padding: 30px 30px;
+    padding: 15px 30px 15px 20px;
+    background-color: hsl(0, 0%, 99%);
+    font-size: .8rem;
+    font-weight: 300;
+    border: 1px solid transparent;
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.1);
 }
+
 #card-holder {
-    margin: 5px 40px;
+    margin: 50px 60px;
 }
+
 .card {
     width: 16rem;
 }
+
 .card-body h2 {
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: 800;
-    padding: 10px; 2px;
+    padding: 10px;
 }
+
 .card-body p {
-    font-size: .8rem;
-    line-height: .75;
+    font-size: .82rem;
+    line-height: .6;
+    padding-left: 10px;
+    font-weight: 800;
+}
+
+.text {
+    font-weight: 500;
 }
