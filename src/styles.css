@@ -8,8 +8,7 @@ body {
 }
 
 header,
-#search-bar,
-#card-holder {
+#search-bar {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -53,10 +52,16 @@ select {
 
 #card-holder {
     margin: 50px 60px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 .card {
-    width: 16rem;
+    min-width: 16rem;
+    max-width: 20rem;
+    max-height: 40rem;
+    margin: 10px 0px;
 }
 
 .card-body h2 {
@@ -74,4 +79,4 @@ select {
 
 .text {
     font-weight: 500;
-}
+} 
