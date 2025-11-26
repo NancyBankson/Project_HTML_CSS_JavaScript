@@ -24,7 +24,21 @@ export class Country {
       Flag: ${this.flags.png}
       Name: ${this.name.common}
       Region: ${this.region}
-      Capital: ${this.capital}`;
+      Capital: ${this.capital}
+      Currencies: ${this.currencies}
+      Native Name: ${this.name.nativeName}
+      Sub Region: ${this.subregion}
+      Languages: ${this.languages}
+      Border Countries: ${this.borders}
+      `;
+    }
+}
+export class CurrencyName {
+    name;
+    symbol;
+    constructor(name, symbol) {
+        this.name = name;
+        this.symbol = symbol;
     }
 }
 //# sourceMappingURL=Country.js.map

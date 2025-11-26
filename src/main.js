@@ -1,6 +1,8 @@
 import { fetchData } from "./services/apiService.js";
 import { Country } from "./models/Country.js";
+import { CurrencyName } from "./models/Country.js";
 const cardHolder = document.getElementById("card-holder");
+const searchBar = document.getElementById("search-bar");
 let regionSelector = document.getElementById("region-filter");
 let countrySelector = document.getElementById("name-search");
 let countryArray = [];
@@ -9,7 +11,10 @@ window.addEventListener('load', () => {
         .then(data => {
         countryArray = data;
         for (let i = 0; i < countryArray.length; i++) {
-            const country = new Country(countryArray[i].flags, countryArray[i].name, countryArray[i].currencies, countryArray[i].capital, countryArray[i].region, countryArray[i].subregion, countryArray[i].languages, countryArray[i].borders, countryArray[i].population);
+            const country = new Country(countryArray[i].flags, countryArray[i].name, countryArray[i].currencies
+                ? Object.values(countryArray[i].currencies).map((c) => c.name)
+                : [], countryArray[i].capital, countryArray[i].region, countryArray[i].subregion, countryArray[i].languages, countryArray[i].borders, countryArray[i].population);
+            // console.log(country);
             let flagToDisplay = country.flags.png;
             let flagAlt = country.flags.alt;
             let nameToDisplay = country.name.common;
@@ -29,7 +34,6 @@ window.addEventListener('load', () => {
                         <p>Capital: <span class="text">${capitalToDisplay}</span></p>
                     </div>`;
             cardHolder.appendChild(newCard);
-            // console.log(country.displayDetails());
             // console.log(data);
             // console.log(country.displayDetails());            
         }
@@ -93,9 +97,58 @@ regionSelector?.addEventListener("change", function () {
         }
     }
 });
-// cardHolder?.addEventListener("click", function() {
-//     if (event.target.classList.contains("card")) {
-//         let countryToDisplayId = event.target.closest("div").id;
-//     }
-// })
+cardHolder?.addEventListener("click", function () {
+    // if ((event!.target as HTMLElement)?.classList.contains("card")) {
+    //     console.log("true");
+    const targetElement = event.target;
+    let divId = "0";
+    if (targetElement) {
+        const closestDiv = targetElement.closest("div");
+        if (closestDiv) {
+            divId = closestDiv.id;
+            // Use divId here
+            // console.log(divId);
+        }
+        else {
+            // Handle the case where no ancestor div was found
+            console.log("not found");
+        }
+    }
+    let id = parseInt(divId);
+    cardHolder.innerHTML = "";
+    searchBar.innerHTML = "";
+    const displayCountry = new Country(countryArray[id].flags, countryArray[id].name, countryArray[id].currencies
+        ? Object.values(countryArray[id].currencies).map((c) => c.name)
+        : [], countryArray[id].capital, countryArray[id].region, countryArray[id].subregion, countryArray[id].languages, countryArray[id].borders, countryArray[id].population);
+    let flagToDisplay = displayCountry.flags.png;
+    let flagAlt = displayCountry.flags.alt;
+    let nameToDisplay = displayCountry.name.common;
+    let nativeNameToDisplay = displayCountry.name.nativeName;
+    let currenciesToDisplay = displayCountry.currencies;
+    let populationToDisplay = displayCountry.population;
+    let regionToDisplay = displayCountry.region;
+    let subregionToDisplay = displayCountry.subregion;
+    let capitalToDisplay = displayCountry.capital;
+    let topLevelDomainToDisplay = "I dunno";
+    let languagesToDisplay = displayCountry.languages;
+    let newButton = document.createElement("button");
+    newButton.innerText = "Back <--";
+    searchBar?.appendChild(newButton);
+    let newDisplay = document.createElement("div");
+    newDisplay.innerHTML = `
+            <img src=${flagToDisplay} alt=${flagAlt}>
+                    <div class= "display-body">
+                        <h2 class="card-title">${nameToDisplay}<h2>
+                        <p class="card-text">Native Name: <span class="text">${nativeNameToDisplay}</span></p>
+                        <p class="card-text">Population: <span class="text">${populationToDisplay}</span></p>
+                        <p>Region: <span class="text">${regionToDisplay}</span></p>
+                        <p>Sub Region: <span class="text">${subregionToDisplay}</span></p>
+                        <p>Capital: <span class="text">${capitalToDisplay}</span></p>
+                        <p>Top Level Domain: <span class="text">${topLevelDomainToDisplay}</span></p>
+                        <p>Currencies: <span class="text">${currenciesToDisplay}</span></p>
+                        <p>Languages: <span class="text">${languagesToDisplay}</span></p>
+                    </div>`;
+    cardHolder.appendChild(newDisplay);
+    // }
+});
 //# sourceMappingURL=main.js.map

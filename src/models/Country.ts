@@ -1,3 +1,5 @@
+
+
 export class Country {
     flags: flags;
     name: name;
@@ -5,10 +7,10 @@ export class Country {
     capital: string[];
     region: string;
     subregion: string;
-    languages: string;
+    languages: string[];
     borders: string[];
     population: number;
-    constructor(flags: flags, name: name, currencies: string[], capital: string[], region: string, subregion: string, languages: string, borders: string[], population: number) {
+    constructor(flags: flags, name: name, currencies: string[], capital: string[], region: string, subregion: string, languages: string[], borders: string[], population: number) {
         this.flags = flags;
         this.name = name;
         this.currencies = currencies;
@@ -24,7 +26,13 @@ export class Country {
       Flag: ${this.flags.png}
       Name: ${this.name.common}
       Region: ${this.region}
-      Capital: ${this.capital}`
+      Capital: ${this.capital}
+      Currencies: ${this.currencies}
+      Native Name: ${this.name.nativeName}
+      Sub Region: ${this.subregion}
+      Languages: ${this.languages}
+      Border Countries: ${this.borders}
+      `
     }
 }
 
@@ -38,4 +46,14 @@ interface name {
     common: string;
     official: string;
     nativeName: string[];
+}
+
+export class CurrencyName {
+    name: string;
+    symbol: string;
+
+    constructor(name: string, symbol: string) {
+        this.name = name;
+        this.symbol = symbol;
+    }
 }
