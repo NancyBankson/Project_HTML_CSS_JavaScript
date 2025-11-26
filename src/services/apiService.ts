@@ -12,3 +12,17 @@ export async function fetchData() {
         console.error("Fetch error:", error);
     }
 }
+
+export async function fetchCodes() {
+    try {
+        const response2 = await fetch("https://restcountries.com/v3.1/all?status=true&fields=name,cca3");
+        if (!response2.ok) {
+            throw new Error("Network response was not ok");
+        }
+        const data2 = await response2.json();
+        return data2;
+    }
+    catch (error) {
+        console.error("Fetch error:", error);
+    }
+}

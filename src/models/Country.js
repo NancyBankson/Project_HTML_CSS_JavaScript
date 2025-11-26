@@ -9,7 +9,8 @@ export class Country {
     borders;
     population;
     tld;
-    constructor(flags, name, currencies, capital, region, subregion, languages, borders, population, tld) {
+    code;
+    constructor(flags, name, currencies, capital, region, subregion, languages, borders, population, tld, code) {
         this.flags = flags;
         this.name = name;
         this.currencies = currencies;
@@ -20,6 +21,7 @@ export class Country {
         this.borders = borders;
         this.population = population;
         this.tld = tld;
+        this.code = code;
     }
     displayDetails() {
         return `
@@ -41,6 +43,14 @@ export class CurrencyName {
     constructor(name, symbol) {
         this.name = name;
         this.symbol = symbol;
+    }
+}
+export class Codes {
+    cca3;
+    name;
+    constructor(cca3, name) {
+        this.cca3 = cca3;
+        this.name = name;
     }
 }
 //# sourceMappingURL=Country.js.map
