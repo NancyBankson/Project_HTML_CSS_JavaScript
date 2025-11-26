@@ -8,7 +8,8 @@ export class Country {
     languages;
     borders;
     population;
-    constructor(flags, name, currencies, capital, region, subregion, languages, borders, population) {
+    tld;
+    constructor(flags, name, currencies, capital, region, subregion, languages, borders, population, tld) {
         this.flags = flags;
         this.name = name;
         this.currencies = currencies;
@@ -18,6 +19,7 @@ export class Country {
         this.languages = languages;
         this.borders = borders;
         this.population = population;
+        this.tld = tld;
     }
     displayDetails() {
         return `

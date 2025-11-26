@@ -8,7 +8,8 @@ export declare class Country {
     languages: string[];
     borders: string[];
     population: number;
-    constructor(flags: flags, name: name, currencies: string[], capital: string[], region: string, subregion: string, languages: string[], borders: string[], population: number);
+    tld: string[];
+    constructor(flags: flags, name: name, currencies: string[], capital: string[], region: string, subregion: string, languages: string[], borders: string[], population: number, tld: string[]);
     displayDetails(): string;
 }
 interface flags {

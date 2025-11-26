@@ -10,7 +10,8 @@ export class Country {
     languages: string[];
     borders: string[];
     population: number;
-    constructor(flags: flags, name: name, currencies: string[], capital: string[], region: string, subregion: string, languages: string[], borders: string[], population: number) {
+    tld: string[];
+    constructor(flags: flags, name: name, currencies: string[], capital: string[], region: string, subregion: string, languages: string[], borders: string[], population: number, tld: string[]) {
         this.flags = flags;
         this.name = name;
         this.currencies = currencies;
@@ -20,6 +21,7 @@ export class Country {
         this.languages = languages;
         this.borders = borders;
         this.population = population;
+        this.tld = tld;
     }
     displayDetails() {
         return `

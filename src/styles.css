@@ -79,3 +79,16 @@ select {
 .text {
     font-weight: 500;
 } 
+.big-display {
+    display: flex;
+    flex-direction: row;
+}
+.big-display img {
+   min-width: 800px;
+}
+.big-display p {
+    font-size: .8rem;
+}
+.big-display div {
+    margin-left: 30px;
+}

@@ -10,14 +10,17 @@ window.addEventListener('load', () => {
     fetchData()
         .then(data => {
         countryArray = data;
+        // console.log(countryArray);
         for (let i = 0; i < countryArray.length; i++) {
             const country = new Country(countryArray[i].flags, countryArray[i].name, countryArray[i].currencies
                 ? Object.values(countryArray[i].currencies).map((c) => c.name)
-                : [], countryArray[i].capital, countryArray[i].region, countryArray[i].subregion, countryArray[i].languages, countryArray[i].borders, countryArray[i].population);
+                : [], countryArray[i].capital, countryArray[i].region, countryArray[i].subregion, countryArray[i].languages, countryArray[i].borders, countryArray[i].population, countryArray[i].tld);
             // console.log(country);
             let flagToDisplay = country.flags.png;
             let flagAlt = country.flags.alt;
             let nameToDisplay = country.name.common;
+            let nativeNameToDisplay = country.name.nativeName;
+            console.log(nativeNameToDisplay);
             let populationToDisplay = country.population;
             let regionToDisplay = country.region;
             let capitalToDisplay = country.capital;
@@ -27,7 +30,7 @@ window.addEventListener('load', () => {
             newCard.setAttribute("id", idString);
             newCard.innerHTML = `
                     <img src=${flagToDisplay} class="card-img-top" alt=${flagAlt}>
-                    <div class= "card-body">
+                    <div class= "card-body" id="${i}"
                         <h2 class="card-title">${nameToDisplay}<h2>
                         <p class="card-text">Population: <span class="text">${populationToDisplay}</span></p>
                         <p>Region: <span class="text">${regionToDisplay}</span></p>
@@ -44,7 +47,7 @@ window.addEventListener('load', () => {
 countrySelector?.addEventListener("change", function () {
     cardHolder.innerHTML = "";
     for (let i = 0; i < countryArray.length; i++) {
-        const filterCountry = new Country(countryArray[i].flags, countryArray[i].name, countryArray[i].currencies, countryArray[i].capital, countryArray[i].region, countryArray[i].subregion, countryArray[i].languages, countryArray[i].borders, countryArray[i].population);
+        const filterCountry = new Country(countryArray[i].flags, countryArray[i].name, countryArray[i].currencies, countryArray[i].capital, countryArray[i].region, countryArray[i].subregion, countryArray[i].languages, countryArray[i].borders, countryArray[i].population, countryArray[i].tld);
         let flagToDisplay = filterCountry.flags.png;
         let flagAlt = filterCountry.flags.alt;
         let nameToDisplay = filterCountry.name.common;
@@ -59,7 +62,7 @@ countrySelector?.addEventListener("change", function () {
             newCard.setAttribute("id", idString);
             newCard.innerHTML = `
                     <img src=${flagToDisplay} class="card-img-top" alt=${flagAlt}>
-                    <div class= "card-body">
+                    <div class= "card-body" id="${i}"
                         <h2 class="card-title">${nameToDisplay}<h2>
                         <p class="card-text">Population: <span class="text">${populationToDisplay}</span></p>
                         <p>Region: <span class="text">${regionToDisplay}</span></p>
@@ -72,7 +75,7 @@ countrySelector?.addEventListener("change", function () {
 regionSelector?.addEventListener("change", function () {
     cardHolder.innerHTML = "";
     for (let i = 0; i < countryArray.length; i++) {
-        const filterCountry = new Country(countryArray[i].flags, countryArray[i].name, countryArray[i].currencies, countryArray[i].capital, countryArray[i].region, countryArray[i].subregion, countryArray[i].languages, countryArray[i].borders, countryArray[i].population);
+        const filterCountry = new Country(countryArray[i].flags, countryArray[i].name, countryArray[i].currencies, countryArray[i].capital, countryArray[i].region, countryArray[i].subregion, countryArray[i].languages, countryArray[i].borders, countryArray[i].population, countryArray[i].tld);
         let flagToDisplay = filterCountry.flags.png;
         let flagAlt = filterCountry.flags.alt;
         let nameToDisplay = filterCountry.name.common;
@@ -87,7 +90,7 @@ regionSelector?.addEventListener("change", function () {
             newCard.setAttribute("id", idString);
             newCard.innerHTML = `
                     <img src=${flagToDisplay} class="card-img-top" alt=${flagAlt}>
-                    <div class= "card-body">
+                    <div class= "card-body" id="${i}">
                         <h2 class="card-title">${nameToDisplay}<h2>
                         <p class="card-text">Population: <span class="text">${populationToDisplay}</span></p>
                         <p>Region: <span class="text">${regionToDisplay}</span></p>
@@ -119,35 +122,40 @@ cardHolder?.addEventListener("click", function () {
     searchBar.innerHTML = "";
     const displayCountry = new Country(countryArray[id].flags, countryArray[id].name, countryArray[id].currencies
         ? Object.values(countryArray[id].currencies).map((c) => c.name)
-        : [], countryArray[id].capital, countryArray[id].region, countryArray[id].subregion, countryArray[id].languages, countryArray[id].borders, countryArray[id].population);
+        : [], countryArray[id].capital, countryArray[id].region, countryArray[id].subregion, Object.values(countryArray[id].languages), countryArray[id].borders, countryArray[id].population, countryArray[id].tld);
     let flagToDisplay = displayCountry.flags.png;
     let flagAlt = displayCountry.flags.alt;
     let nameToDisplay = displayCountry.name.common;
-    let nativeNameToDisplay = displayCountry.name.nativeName;
+    let nativeNameToDisplayObject = displayCountry.name.nativeName;
+    let nativeNameToDisplayArray = nativeNameToDisplayObject
+        ? Object.values(nativeNameToDisplayObject).map((c) => c.official)
+        : [];
+    let nativeNameToDisplay = nativeNameToDisplayArray[0];
     let currenciesToDisplay = displayCountry.currencies;
     let populationToDisplay = displayCountry.population;
     let regionToDisplay = displayCountry.region;
     let subregionToDisplay = displayCountry.subregion;
     let capitalToDisplay = displayCountry.capital;
-    let topLevelDomainToDisplay = "I dunno";
+    let topLevelDomainToDisplay = displayCountry.tld;
     let languagesToDisplay = displayCountry.languages;
     let newButton = document.createElement("button");
     newButton.innerText = "Back <--";
     searchBar?.appendChild(newButton);
     let newDisplay = document.createElement("div");
+    newDisplay.setAttribute("class", "big-display");
     newDisplay.innerHTML = `
             <img src=${flagToDisplay} alt=${flagAlt}>
-                    <div class= "display-body">
-                        <h2 class="card-title">${nameToDisplay}<h2>
-                        <p class="card-text">Native Name: <span class="text">${nativeNameToDisplay}</span></p>
-                        <p class="card-text">Population: <span class="text">${populationToDisplay}</span></p>
-                        <p>Region: <span class="text">${regionToDisplay}</span></p>
-                        <p>Sub Region: <span class="text">${subregionToDisplay}</span></p>
-                        <p>Capital: <span class="text">${capitalToDisplay}</span></p>
-                        <p>Top Level Domain: <span class="text">${topLevelDomainToDisplay}</span></p>
-                        <p>Currencies: <span class="text">${currenciesToDisplay}</span></p>
-                        <p>Languages: <span class="text">${languagesToDisplay}</span></p>
-                    </div>`;
+            <div class= "display-body">
+                <h2 class="card-title">${nameToDisplay}<h2>
+                <p class="card-text">Native Name: <span class="text">${nativeNameToDisplay}</span></p>
+                <p class="card-text">Population: <span class="text">${populationToDisplay}</span></p>
+                <p>Region: <span class="text">${regionToDisplay}</span></p>
+                <p>Sub Region: <span class="text">${subregionToDisplay}</span></p>
+                <p>Capital: <span class="text">${capitalToDisplay}</span></p>
+                <p>Top Level Domain: <span class="text">${topLevelDomainToDisplay}</span></p>
+                <p>Currencies: <span class="text">${currenciesToDisplay}</span></p>
+                <p>Languages: <span class="text">${languagesToDisplay}</span></p>
+            </div>`;
     cardHolder.appendChild(newDisplay);
     // }
 });
