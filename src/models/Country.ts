@@ -52,15 +52,15 @@ interface name {
     nativeName: string[];
 }
 
-export class CurrencyName {
-    name: string;
-    symbol: string;
+// export class CurrencyName {
+//     name: string;
+//     symbol: string;
 
-    constructor(name: string, symbol: string) {
-        this.name = name;
-        this.symbol = symbol;
-    }
-}
+//     constructor(name: string, symbol: string) {
+//         this.name = name;
+//         this.symbol = symbol;
+//     }
+// }
 
 export class Codes {
     cca3: string;

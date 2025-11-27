@@ -1,6 +1,6 @@
 import { fetchData, fetchCodes } from "./services/apiService.js";
 import { Country, Codes } from "./models/Country.js";
-import { CurrencyName } from "./models/Country.js";
+// import { CurrencyName } from "./models/Country.js";
 const cardHolder = document.getElementById("card-holder");
 const searchBar = document.getElementById("search-bar");
 let regionSelector = document.getElementById("region-filter");
@@ -11,12 +11,10 @@ window.addEventListener('load', () => {
     fetchData()
         .then(data => {
         countryArray = data;
-        // console.log(countryArray);
         for (let i = 0; i < countryArray.length; i++) {
             const country = new Country(countryArray[i].flags, countryArray[i].name, countryArray[i].currencies
                 ? Object.values(countryArray[i].currencies).map((c) => c.name)
                 : [], countryArray[i].capital, countryArray[i].region, countryArray[i].subregion, countryArray[i].languages, countryArray[i].borders, countryArray[i].population, countryArray[i].tld, []);
-            // console.log(country);
             let flagToDisplay = country.flags.png;
             let flagAlt = country.flags.alt;
             let nameToDisplay = country.name.common;
@@ -36,24 +34,9 @@ window.addEventListener('load', () => {
                         <p>Capital: <span class="text">${capitalToDisplay}</span></p>
                     </div>`;
             cardHolder.appendChild(newCard);
-            // console.log(data);
-            // console.log(country.displayDetails());            
         }
-        // const country = new Country(countryArray[0].flags, countryArray[0].name, countryArray[0].currencies, countryArray[0].capital, countryArray[0].region, countryArray[0].subregion, countryArray[0].languages, countryArray[0].borders, countryArray[0].population);
-        // console.log(countryArray[0]);
     })
         .catch(error => console.error("Fetch error:", error));
-    // fetchCodes()
-    //     .then(data2 => {
-    //         let codeArrayObject = data2;
-    //         let codeArray = codeArrayObject[0];
-    //         // return data2;
-    //         // for (let j = 0; j < codeArray.length; j++) {
-    //         //     console.log(codeArray[j]!.cca3);
-    //         // }
-    //         console.log(codeArray);
-    //     })
-    //     .catch(error => console.error("Fetch error:", error));
 });
 countrySelector?.addEventListener("change", function () {
     cardHolder.innerHTML = "";
@@ -155,7 +138,6 @@ cardHolder?.addEventListener("click", function () {
         let borderNamesArray = [];
         for (let i = 0; i < borderCodesArray.length; i++) {
             let codeFromTarget = borderCodesArray[i];
-            // console.log(codeFromTarget);
             for (let j = 0; j < countryArray.length; j++) {
                 let codeToCompare = codeArray[j].cca3;
                 if (codeFromTarget === codeToCompare) {
@@ -185,7 +167,5 @@ cardHolder?.addEventListener("click", function () {
         cardHolder.appendChild(newDisplay);
     })
         .catch(error => console.error("Fetch error:", error));
-    // console.log(codeArray);
-    // }
 });
 //# sourceMappingURL=main.js.map

@@ -37,14 +37,14 @@ export class Country {
       `;
     }
 }
-export class CurrencyName {
-    name;
-    symbol;
-    constructor(name, symbol) {
-        this.name = name;
-        this.symbol = symbol;
-    }
-}
+// export class CurrencyName {
+//     name: string;
+//     symbol: string;
+//     constructor(name: string, symbol: string) {
+//         this.name = name;
+//         this.symbol = symbol;
+//     }
+// }
 export class Codes {
     cca3;
     name;

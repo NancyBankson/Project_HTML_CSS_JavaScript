@@ -23,11 +23,6 @@ interface name {
     official: string;
     nativeName: string[];
 }
-export declare class CurrencyName {
-    name: string;
-    symbol: string;
-    constructor(name: string, symbol: string);
-}
 export declare class Codes {
     cca3: string;
     name: string[];
