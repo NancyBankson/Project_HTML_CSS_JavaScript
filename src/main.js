@@ -40,15 +40,20 @@ window.addEventListener('load', () => {
             // console.log(country.displayDetails());            
         }
         // const country = new Country(countryArray[0].flags, countryArray[0].name, countryArray[0].currencies, countryArray[0].capital, countryArray[0].region, countryArray[0].subregion, countryArray[0].languages, countryArray[0].borders, countryArray[0].population);
+        // console.log(countryArray[0]);
     })
         .catch(error => console.error("Fetch error:", error));
-    fetchCodes()
-        .then(data2 => {
-        let codeArray = data2;
-        return data2;
-        // console.log(codeArray);
-    })
-        .catch(error => console.error("Fetch error:", error));
+    // fetchCodes()
+    //     .then(data2 => {
+    //         let codeArrayObject = data2;
+    //         let codeArray = codeArrayObject[0];
+    //         // return data2;
+    //         // for (let j = 0; j < codeArray.length; j++) {
+    //         //     console.log(codeArray[j]!.cca3);
+    //         // }
+    //         console.log(codeArray);
+    //     })
+    //     .catch(error => console.error("Fetch error:", error));
 });
 countrySelector?.addEventListener("change", function () {
     cardHolder.innerHTML = "";
@@ -107,8 +112,6 @@ regionSelector?.addEventListener("change", function () {
     }
 });
 cardHolder?.addEventListener("click", function () {
-    // if ((event!.target as HTMLElement)?.classList.contains("card")) {
-    //     console.log("true");
     const targetElement = event.target;
     let divId = "0";
     if (targetElement) {
@@ -126,42 +129,47 @@ cardHolder?.addEventListener("click", function () {
     let id = parseInt(divId);
     cardHolder.innerHTML = "";
     searchBar.innerHTML = "";
-    const displayCountry = new Country(countryArray[id].flags, countryArray[id].name, countryArray[id].currencies
-        ? Object.values(countryArray[id].currencies).map((c) => c.name)
-        : [], countryArray[id].capital, countryArray[id].region, countryArray[id].subregion, Object.values(countryArray[id].languages), countryArray[id].borders, countryArray[id].population, countryArray[id].tld, []);
-    let flagToDisplay = displayCountry.flags.png;
-    let flagAlt = displayCountry.flags.alt;
-    let nameToDisplay = displayCountry.name.common;
-    let nativeNameToDisplayObject = displayCountry.name.nativeName;
-    let nativeNameToDisplayArray = nativeNameToDisplayObject
-        ? Object.values(nativeNameToDisplayObject).map((c) => c.official)
-        : [];
-    let nativeNameToDisplay = nativeNameToDisplayArray[0];
-    let currenciesToDisplay = displayCountry.currencies;
-    let populationToDisplay = displayCountry.population;
-    let regionToDisplay = displayCountry.region;
-    let subregionToDisplay = displayCountry.subregion;
-    let capitalToDisplay = displayCountry.capital;
-    let topLevelDomainToDisplay = displayCountry.tld;
-    let languagesToDisplay = displayCountry.languages;
-    let borderCodesArray = displayCountry.borders;
-    let borderNamesArray = [];
-    for (let i = 0; i < borderCodesArray.length; i++) {
-        let codeFromTarget = borderCodesArray[i];
-        console.log(codeFromTarget);
-        // for (let j=0; j < countryArray.length; j++) {
-        //     let codeToCompare = Object.values(codeArray[j]!.cca3).map((c: any) => c.cca3);
-        //     if (codeFromTarget === codeToCompare[j]) {
-        //         borderNamesArray.push(countryArray[i]?.name.common)
-        //     }
-        // }
-    }
-    let newButton = document.createElement("button");
-    newButton.innerText = "Back <--";
-    searchBar?.appendChild(newButton);
-    let newDisplay = document.createElement("div");
-    newDisplay.setAttribute("class", "big-display");
-    newDisplay.innerHTML = `
+    fetchCodes()
+        .then(data2 => {
+        codeArray = data2;
+        const displayCountry = new Country(countryArray[id].flags, countryArray[id].name, countryArray[id].currencies
+            ? Object.values(countryArray[id].currencies).map((c) => c.name)
+            : [], countryArray[id].capital, countryArray[id].region, countryArray[id].subregion, Object.values(countryArray[id].languages), countryArray[id].borders, countryArray[id].population, countryArray[id].tld, []);
+        let flagToDisplay = displayCountry.flags.png;
+        let flagAlt = displayCountry.flags.alt;
+        let nameToDisplay = displayCountry.name.common;
+        let nativeNameToDisplayObject = displayCountry.name.nativeName;
+        let nativeNameToDisplayArray = nativeNameToDisplayObject
+            ? Object.values(nativeNameToDisplayObject).map((c) => c.official)
+            : [];
+        let nativeNameToDisplay = nativeNameToDisplayArray[0];
+        let currenciesToDisplay = displayCountry.currencies;
+        let populationToDisplay = displayCountry.population;
+        let regionToDisplay = displayCountry.region;
+        let subregionToDisplay = displayCountry.subregion;
+        let capitalToDisplay = displayCountry.capital;
+        let topLevelDomainToDisplay = displayCountry.tld;
+        let languagesToDisplay = displayCountry.languages;
+        let borderCodesArray = displayCountry.borders;
+        console.log(borderCodesArray);
+        let borderNamesArray = [];
+        for (let i = 0; i < borderCodesArray.length; i++) {
+            let codeFromTarget = borderCodesArray[i];
+            // console.log(codeFromTarget);
+            for (let j = 0; j < countryArray.length; j++) {
+                let codeToCompare = codeArray[j].cca3;
+                if (codeFromTarget === codeToCompare) {
+                    borderNamesArray.push(countryArray[j]?.name.common);
+                    console.log(countryArray[j]?.name.common);
+                }
+            }
+        }
+        let newButton = document.createElement("button");
+        newButton.innerText = "Back <--";
+        searchBar?.appendChild(newButton);
+        let newDisplay = document.createElement("div");
+        newDisplay.setAttribute("class", "big-display");
+        newDisplay.innerHTML = `
             <img src=${flagToDisplay} alt=${flagAlt}>
             <div class= "display-body">
                 <h2 class="card-title">${nameToDisplay}<h2>
@@ -174,7 +182,10 @@ cardHolder?.addEventListener("click", function () {
                 <p>Currencies: <span class="text">${currenciesToDisplay}</span></p>
                 <p>Languages: <span class="text">${languagesToDisplay}</span></p>
             </div>`;
-    cardHolder.appendChild(newDisplay);
+        cardHolder.appendChild(newDisplay);
+    })
+        .catch(error => console.error("Fetch error:", error));
+    // console.log(codeArray);
     // }
 });
 //# sourceMappingURL=main.js.map
