@@ -107,10 +107,7 @@ cardHolder?.addEventListener("click", function () {
         const closestDiv = targetElement.closest("div");
         if (closestDiv) {
             divId = closestDiv.id;
-            // Use divId here
-            // console.log(divId);
         } else {
-            // Handle the case where no ancestor div was found
             console.log("not found")
         }
     }
@@ -161,7 +158,7 @@ cardHolder?.addEventListener("click", function () {
             newDisplay.setAttribute("class", "big-display");
             newDisplay.innerHTML = `
             <img src=${flagToDisplay} alt=${flagAlt}>
-            <div class= "display-body">
+            <div id="display-body">
                 <h2 class="card-title">${nameToDisplay}<h2>
                 <p class="card-text">Native Name: <span class="text">${nativeNameToDisplay}</span></p>
                 <p class="card-text">Population: <span class="text">${populationToDisplay}</span></p>
@@ -173,6 +170,18 @@ cardHolder?.addEventListener("click", function () {
                 <p>Languages: <span class="text">${languagesToDisplay}</span></p>
             </div>`;
             cardHolder.appendChild(newDisplay);
+            const cardBody: HTMLElement | null = document.getElementById("display-body");            
+            console.log(borderCodesArray.length);
+            if (borderNamesArray.length > 0) {
+                for (let i = 0; i < borderNamesArray.length; i++) {
+                    let newBorderButton = document.createElement("button");
+                    newBorderButton.textContent = borderNamesArray[i]!;
+                    newBorderButton.setAttribute("id", borderCodesArray[i]!);
+                    cardBody?.appendChild(newBorderButton);
+                }
+            }
+
         })
-        .catch(error => console.error("Fetch error:", error)); 
+
+        .catch(error => console.error("Fetch error:", error));
 })
