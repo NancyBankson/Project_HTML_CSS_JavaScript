@@ -169,8 +169,15 @@ cardHolder?.addEventListener("click", function () {
             }
 
             let newButton = document.createElement("button");
+            newButton.setAttribute("id", "back-button");
             newButton.innerText = "Back <--"
             searchBar?.appendChild(newButton);
+
+            const backButton: HTMLElement | null = document.getElementById("back-button");
+            backButton?.addEventListener("click", function() {
+                window.location.reload(); 
+            })
+
             let newDisplay = document.createElement("div");
             newDisplay.setAttribute("class", "big-display");
             newDisplay.innerHTML = `
