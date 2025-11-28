@@ -21,7 +21,7 @@ window.addEventListener('load', () => {
             let populationToDisplay = country.population;
             let regionToDisplay = country.region;
             let capitalToDisplay = country.capital;
-            let newCard = document.createElement("div");
+            let newCard = document.createElement("card");
             newCard.setAttribute("class", "card");
             let idString = i.toString();
             newCard.setAttribute("id", idString);
@@ -50,7 +50,7 @@ countrySelector?.addEventListener("change", function () {
         let capitalToDisplay = filterCountry.capital;
         let compareName = countrySelector.value;
         if (nameToDisplay.toUpperCase() === compareName.toUpperCase()) {
-            let newCard = document.createElement("div");
+            let newCard = document.createElement("card");
             newCard.setAttribute("class", "card");
             let idString = i.toString();
             newCard.setAttribute("id", idString);
@@ -78,7 +78,7 @@ regionSelector?.addEventListener("change", function () {
         let capitalToDisplay = filterCountry.capital;
         let compareRegion = regionSelector.value;
         if (regionToDisplay === compareRegion) {
-            let newCard = document.createElement("div");
+            let newCard = document.createElement("card");
             newCard.setAttribute("class", "card");
             let idString = i.toString();
             newCard.setAttribute("id", idString);
@@ -96,22 +96,38 @@ regionSelector?.addEventListener("change", function () {
 });
 cardHolder?.addEventListener("click", function () {
     const targetElement = event.target;
-    let divId = "0";
+    let divId = "";
+    let buttonId = "";
     if (targetElement) {
-        const closestDiv = targetElement.closest("div");
+        const closestDiv = targetElement.closest("card");
         if (closestDiv) {
             divId = closestDiv.id;
         }
         else {
             console.log("not found");
         }
+        const closestButton = targetElement.closest("button");
+        if (closestButton) {
+            buttonId = closestButton.id;
+        }
     }
-    let id = parseInt(divId);
+    let id = 0;
+    if (divId != "") {
+        id = parseInt(divId);
+    }
     cardHolder.innerHTML = "";
     searchBar.innerHTML = "";
     fetchCodes()
         .then(data2 => {
         codeArray = data2;
+        if ((divId === "") && (buttonId != "")) {
+            for (let j = 0; j < codeArray.length; j++) {
+                let codeToCompare = codeArray[j].cca3;
+                if (buttonId === codeToCompare) {
+                    id = j;
+                }
+            }
+        }
         const displayCountry = new Country(countryArray[id].flags, countryArray[id].name, countryArray[id].currencies
             ? Object.values(countryArray[id].currencies).map((c) => c.name)
             : [], countryArray[id].capital, countryArray[id].region, countryArray[id].subregion, Object.values(countryArray[id].languages), countryArray[id].borders, countryArray[id].population, countryArray[id].tld, []);
@@ -151,15 +167,15 @@ cardHolder?.addEventListener("click", function () {
         newDisplay.innerHTML = `
             <img src=${flagToDisplay} alt=${flagAlt}>
             <div id="display-body">
-                <h2 class="card-title">${nameToDisplay}<h2>
+                <h2 class="card-title">${nameToDisplay}</h2>
                 <p class="card-text">Native Name: <span class="text">${nativeNameToDisplay}</span></p>
                 <p class="card-text">Population: <span class="text">${populationToDisplay}</span></p>
-                <p>Region: <span class="text">${regionToDisplay}</span></p>
-                <p>Sub Region: <span class="text">${subregionToDisplay}</span></p>
-                <p>Capital: <span class="text">${capitalToDisplay}</span></p>
-                <p>Top Level Domain: <span class="text">${topLevelDomainToDisplay}</span></p>
-                <p>Currencies: <span class="text">${currenciesToDisplay}</span></p>
-                <p>Languages: <span class="text">${languagesToDisplay}</span></p>
+                <p class="card-text">Region: <span class="text">${regionToDisplay}</span></p>
+                <p class="card-text">Sub Region: <span class="text">${subregionToDisplay}</span></p>
+                <p class="card-text">Capital: <span class="text">${capitalToDisplay}</span></p>
+                <p class="card-text">Top Level Domain: <span class="text">${topLevelDomainToDisplay}</span></p>
+                <p class="card-text">Currencies: <span class="text">${currenciesToDisplay}</span></p>
+                <p class="card-text">Languages: <span class="text">${languagesToDisplay}</span></p>
             </div>`;
         cardHolder.appendChild(newDisplay);
         const cardBody = document.getElementById("display-body");
@@ -168,6 +184,7 @@ cardHolder?.addEventListener("click", function () {
             for (let i = 0; i < borderNamesArray.length; i++) {
                 let newBorderButton = document.createElement("button");
                 newBorderButton.textContent = borderNamesArray[i];
+                newBorderButton.setAttribute("class", "new-country");
                 newBorderButton.setAttribute("id", borderCodesArray[i]);
                 cardBody?.appendChild(newBorderButton);
             }
