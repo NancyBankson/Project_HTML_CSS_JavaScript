@@ -5,12 +5,61 @@ import { Country, Codes } from "./models/Country.js";
 
 const cardHolder: HTMLElement | null = document.getElementById("card-holder");
 const searchBar: HTMLElement | null = document.getElementById("search-bar");
+const themeToggle: HTMLElement | null = document.getElementById("theme-toggle");
+const body: HTMLElement | null = document.body;
+const main: HTMLElement | null = document.getElementById("main");
+const inputElement: HTMLElement | null = document.getElementById("name-search");
+const selectElement: HTMLElement | null = document.getElementById("region-filter");
+const allCards = document.getElementsByClassName("card");
+const darkThemeClass: string = "dark-mode";
+const localStorageKey: string = "theme-preference";
+const savedTheme = localStorage.getItem(localStorageKey);
 let regionSelector = document.getElementById("region-filter") as HTMLSelectElement;
 let countrySelector = document.getElementById("name-search") as HTMLInputElement;
 let countryArray: Country[] = [];
 let codeArray: Codes[] = [];
 
+function applyTheme(theme: string) {
+    if (theme === "dark") {
+        body!.classList.add(darkThemeClass);
+        main!.classList.add(darkThemeClass);
+        inputElement!.classList.add(darkThemeClass);
+        selectElement!.classList.add(darkThemeClass);
+        for (let i = 0; i < allCards.length; i++) {
+            const card = allCards[i] as HTMLElement; // Type assertion to HTMLElement
+            card.classList.add(darkThemeClass);
+        }
+        themeToggle!.innerText = "☀️ Light Mode";
+    } else {
+        body!.classList.remove(darkThemeClass);
+        main!.classList.remove(darkThemeClass);
+        inputElement!.classList.remove(darkThemeClass);
+        selectElement!.classList.remove(darkThemeClass);
+        for (let i = 0; i < allCards.length; i++) {
+            const card = allCards[i] as HTMLElement; // Type assertion to HTMLElement
+            card.classList.remove(darkThemeClass);
+        }
+        themeToggle!.innerText = "🌙 Dark Mode";
+    }
+    localStorage.setItem(localStorageKey, theme);
+}
+
+themeToggle?.addEventListener("click", function () {
+    const currentTheme = body.classList.contains(darkThemeClass) ? 'dark' : 'light';
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    applyTheme(newTheme);
+})
+
 window.addEventListener('load', () => {
+
+    // Check for saved theme preference on page load
+
+    if (savedTheme) {
+        applyTheme(savedTheme);
+    } else {
+        // Optional: Set a default theme if no preference is saved
+        applyTheme("light");
+    }
     fetchData()
         .then(data => {
             countryArray = data;
@@ -36,6 +85,11 @@ window.addEventListener('load', () => {
                         <p>Region: <span class="text">${regionToDisplay}</span></p>
                         <p>Capital: <span class="text">${capitalToDisplay}</span></p>
                     </div>`;
+                if (savedTheme === "dark") {
+                    newCard!.classList.add(darkThemeClass);
+                } else {
+                    newCard!.classList.remove(darkThemeClass);
+                }
                 cardHolder!.appendChild(newCard);
             }
         })
@@ -66,7 +120,13 @@ countrySelector?.addEventListener("change", function () {
                         <p>Region: <span class="text">${regionToDisplay}</span></p>
                         <p>Capital: <span class="text">${capitalToDisplay}</span></p>
                     </div>`;
+            if (savedTheme === "dark") {
+                newCard!.classList.add(darkThemeClass);
+            } else {
+                newCard!.classList.remove(darkThemeClass);
+            }
             cardHolder!.appendChild(newCard);
+
         }
     }
 })
@@ -95,6 +155,11 @@ regionSelector?.addEventListener("change", function () {
                         <p>Region: <span class="text">${regionToDisplay}</span></p>
                         <p>Capital: <span class="text">${capitalToDisplay}</span></p>
                     </div>`;
+            if (savedTheme === "dark") {
+                newCard!.classList.add(darkThemeClass);
+            } else {
+                newCard!.classList.remove(darkThemeClass);
+            }
             cardHolder!.appendChild(newCard);
         }
     }
@@ -116,23 +181,23 @@ cardHolder?.addEventListener("click", function () {
             buttonId = closestButton.id;
         }
     }
-    let id = 0;
+    let id = -1;
     if (divId != "") {
         id = parseInt(divId);
-    }    
+    }
     cardHolder!.innerHTML = "";
     searchBar!.innerHTML = "";
 
     fetchCodes()
         .then(data2 => {
             codeArray = data2;
-            if ((divId === "") && (buttonId != "")) {              
-                    for (let j = 0; j < codeArray.length; j++) {
-                        let codeToCompare = codeArray[j]!.cca3;
-                        if (buttonId === codeToCompare) {
-                            id = j;
-                        }
-                    }              
+            if ((divId === "") && (buttonId != "")) {
+                for (let j = 0; j < codeArray.length; j++) {
+                    let codeToCompare = codeArray[j]!.cca3;
+                    if (buttonId === codeToCompare) {
+                        id = j;
+                    }
+                }
             }
 
             const displayCountry = new Country(countryArray[id]!.flags, countryArray[id]!.name, countryArray[id]!.currencies
@@ -174,8 +239,8 @@ cardHolder?.addEventListener("click", function () {
             searchBar?.appendChild(newButton);
 
             const backButton: HTMLElement | null = document.getElementById("back-button");
-            backButton?.addEventListener("click", function() {
-                window.location.reload(); 
+            backButton?.addEventListener("click", function () {
+                window.location.reload();
             })
 
             let newDisplay = document.createElement("div");

@@ -3,11 +3,58 @@ import { Country, Codes } from "./models/Country.js";
 // import { CurrencyName } from "./models/Country.js";
 const cardHolder = document.getElementById("card-holder");
 const searchBar = document.getElementById("search-bar");
+const themeToggle = document.getElementById("theme-toggle");
+const body = document.body;
+const main = document.getElementById("main");
+const inputElement = document.getElementById("name-search");
+const selectElement = document.getElementById("region-filter");
+const allCards = document.getElementsByClassName("card");
+const darkThemeClass = "dark-mode";
+const localStorageKey = "theme-preference";
+const savedTheme = localStorage.getItem(localStorageKey);
 let regionSelector = document.getElementById("region-filter");
 let countrySelector = document.getElementById("name-search");
 let countryArray = [];
 let codeArray = [];
+function applyTheme(theme) {
+    if (theme === "dark") {
+        body.classList.add(darkThemeClass);
+        main.classList.add(darkThemeClass);
+        inputElement.classList.add(darkThemeClass);
+        selectElement.classList.add(darkThemeClass);
+        for (let i = 0; i < allCards.length; i++) {
+            const card = allCards[i]; // Type assertion to HTMLElement
+            card.classList.add(darkThemeClass);
+        }
+        themeToggle.innerText = "☀️ Light Mode";
+    }
+    else {
+        body.classList.remove(darkThemeClass);
+        main.classList.remove(darkThemeClass);
+        inputElement.classList.remove(darkThemeClass);
+        selectElement.classList.remove(darkThemeClass);
+        for (let i = 0; i < allCards.length; i++) {
+            const card = allCards[i]; // Type assertion to HTMLElement
+            card.classList.remove(darkThemeClass);
+        }
+        themeToggle.innerText = "🌙 Dark Mode";
+    }
+    localStorage.setItem(localStorageKey, theme);
+}
+themeToggle?.addEventListener("click", function () {
+    const currentTheme = body.classList.contains(darkThemeClass) ? 'dark' : 'light';
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    applyTheme(newTheme);
+});
 window.addEventListener('load', () => {
+    // Check for saved theme preference on page load
+    if (savedTheme) {
+        applyTheme(savedTheme);
+    }
+    else {
+        // Optional: Set a default theme if no preference is saved
+        applyTheme("light");
+    }
     fetchData()
         .then(data => {
         countryArray = data;
@@ -33,6 +80,12 @@ window.addEventListener('load', () => {
                         <p>Region: <span class="text">${regionToDisplay}</span></p>
                         <p>Capital: <span class="text">${capitalToDisplay}</span></p>
                     </div>`;
+            if (savedTheme === "dark") {
+                newCard.classList.add(darkThemeClass);
+            }
+            else {
+                newCard.classList.remove(darkThemeClass);
+            }
             cardHolder.appendChild(newCard);
         }
     })
@@ -62,6 +115,12 @@ countrySelector?.addEventListener("change", function () {
                         <p>Region: <span class="text">${regionToDisplay}</span></p>
                         <p>Capital: <span class="text">${capitalToDisplay}</span></p>
                     </div>`;
+            if (savedTheme === "dark") {
+                newCard.classList.add(darkThemeClass);
+            }
+            else {
+                newCard.classList.remove(darkThemeClass);
+            }
             cardHolder.appendChild(newCard);
         }
     }
@@ -90,6 +149,12 @@ regionSelector?.addEventListener("change", function () {
                         <p>Region: <span class="text">${regionToDisplay}</span></p>
                         <p>Capital: <span class="text">${capitalToDisplay}</span></p>
                     </div>`;
+            if (savedTheme === "dark") {
+                newCard.classList.add(darkThemeClass);
+            }
+            else {
+                newCard.classList.remove(darkThemeClass);
+            }
             cardHolder.appendChild(newCard);
         }
     }
@@ -111,7 +176,7 @@ cardHolder?.addEventListener("click", function () {
             buttonId = closestButton.id;
         }
     }
-    let id = 0;
+    let id = -1;
     if (divId != "") {
         id = parseInt(divId);
     }

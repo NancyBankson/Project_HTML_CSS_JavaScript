@@ -1,9 +1,22 @@
 body {
     font-family: "Nunito Sans", sans-serif;
+    background-color: hsl(0, 0%, 99%);
+    color: hsl(200, 15%, 8%);
+}
+
+body.dark-mode, input.dark-mode, select.dark-mode, card.dark-mode {
+    background-color: hsl(209, 23%, 22%);
+    color: hsl(0, 100%, 100%);
+}
+
+
+main.dark-mode {
+    background-color: hsl(207, 26%, 17%);
+    color: hsl(0, 100%, 100%);
 }
 
 #header-container {
-     border: 1px solid transparent;
+    border: 1px solid transparent;
     box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.1);
 }
 
@@ -78,17 +91,21 @@ select {
 
 .text {
     font-weight: 500;
-} 
+}
+
 .big-display {
     display: flex;
     flex-direction: row;
 }
+
 .big-display img {
-   min-width: 800px;
+    min-width: 800px;
 }
+
 .big-display p {
     font-size: .8rem;
 }
+
 .big-display div {
     margin-left: 30px;
 }
