@@ -20,12 +20,6 @@ main.dark-mode {
     box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.1);
 }
 
-header,
-#search-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
 
 header {
     margin: 20px 60px;
@@ -98,14 +92,60 @@ select {
     flex-direction: row;
 }
 
+#display-body {
+    margin: 20px 0px 5px 110px;
+}
+
 .big-display img {
-    min-width: 800px;
+    min-width: 600px;
+    height: auto;
+}
+
+.big-display h2 {
+    font-weight: 800;
+    margin-bottom: 35px;
 }
 
 .big-display p {
-    font-size: .8rem;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.1;
 }
 
-.big-display div {
-    margin-left: 30px;
+.big-display span {
+    font-weight: 400;
+}
+
+#text-row {
+    margin-bottom: 60px;
+}
+
+#borders {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
+#borders p {
+    justify-self: center;
+    padding-top: 8px;
+    margin-right: 10px;
+}
+
+#back-button, .new-country {
+    background-color: hsl(0, 0%, 99%);
+    font-size: 1rem;   
+    border: 1px solid transparent;
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.1); 
+}
+
+#back-button {
+    padding: 8px 35px;
+    margin: 10px 0px;
+}
+
+.new-country {
+    padding: 0px 10px;
+    min-width: 6rem;
+    max-height: 2rem;
 }

@@ -18,21 +18,21 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
         integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
         crossorigin="anonymous"></script>
- 
+
     <title>Document</title>
 </head>
 
 <body>
     <div id="header-container">
-        <header>
-            <h1>Where in the World?</h1>
-            <p id="theme-toggle">🌙 Dark Mode</p>
+        <header class="container row">
+            <h1 class="col">Where in the World?</h1>
+            <p class="col" id="theme-toggle">🌙 Dark Mode</p>
         </header>
     </div>
     <main id="main">
-        <div id="search-bar">
-            <input type="text" id="name-search" placeholder="🔍    Search for a country..." />
-            <select id="region-filter">
+        <div id="search-bar" class="container row">
+            <input type="text" id="name-search" class="col-md row-sm" placeholder="🔍    Search for a country..." />
+            <select id="region-filter" class="col-md row-sm">
                 <option value="">Filter By Region</option>
                 <option value="Africa">Africa</option>
                 <option value="Americas">Americas</option>
@@ -40,9 +40,9 @@
                 <option value="Europe">Europe</option>
                 <option value="Oceania">Oceania</option>
             </select>
-        </div>        
+        </div>
         <div id="card-holder">
-        </div> 
+        </div>
     </main>
     <script type="module" src="./main.js"></script>
 </body>

@@ -92,6 +92,8 @@ window.addEventListener('load', () => {
         .catch(error => console.error("Fetch error:", error));
 });
 countrySelector?.addEventListener("change", function () {
+    console.log(savedTheme);
+    console.log("hi");
     cardHolder.innerHTML = "";
     for (let i = 0; i < countryArray.length; i++) {
         const filterCountry = new Country(countryArray[i].flags, countryArray[i].name, countryArray[i].currencies, countryArray[i].capital, countryArray[i].region, countryArray[i].subregion, countryArray[i].languages, countryArray[i].borders, countryArray[i].population, countryArray[i].tld, []);
@@ -124,6 +126,7 @@ countrySelector?.addEventListener("change", function () {
             cardHolder.appendChild(newCard);
         }
     }
+    countrySelector.value = "";
 });
 regionSelector?.addEventListener("change", function () {
     cardHolder.innerHTML = "";
@@ -158,6 +161,7 @@ regionSelector?.addEventListener("change", function () {
             cardHolder.appendChild(newCard);
         }
     }
+    regionSelector.value = "";
 });
 cardHolder?.addEventListener("click", function () {
     const targetElement = event.target;
@@ -204,13 +208,19 @@ cardHolder?.addEventListener("click", function () {
             ? Object.values(nativeNameToDisplayObject).map((c) => c.official)
             : [];
         let nativeNameToDisplay = nativeNameToDisplayArray[0];
-        let currenciesToDisplay = displayCountry.currencies;
+        let currenciesToDisplay = displayCountry.currencies[0];
+        for (let i = 1; i < displayCountry.currencies.length; i++) {
+            currenciesToDisplay = currenciesToDisplay + ", " + displayCountry.currencies[i];
+        }
         let populationToDisplay = displayCountry.population;
         let regionToDisplay = displayCountry.region;
         let subregionToDisplay = displayCountry.subregion;
         let capitalToDisplay = displayCountry.capital;
         let topLevelDomainToDisplay = displayCountry.tld;
-        let languagesToDisplay = displayCountry.languages;
+        let languagesToDisplay = displayCountry.languages[0];
+        for (let i = 1; i < displayCountry.languages.length; i++) {
+            languagesToDisplay = languagesToDisplay + ", " + displayCountry.languages[i];
+        }
         let borderCodesArray = displayCountry.borders;
         console.log(borderCodesArray);
         let borderNamesArray = [];
@@ -226,7 +236,7 @@ cardHolder?.addEventListener("click", function () {
         }
         let newButton = document.createElement("button");
         newButton.setAttribute("id", "back-button");
-        newButton.innerText = "Back <--";
+        newButton.innerText = "<-- Back";
         searchBar?.appendChild(newButton);
         const backButton = document.getElementById("back-button");
         backButton?.addEventListener("click", function () {
@@ -234,21 +244,31 @@ cardHolder?.addEventListener("click", function () {
         });
         let newDisplay = document.createElement("div");
         newDisplay.setAttribute("class", "big-display");
+        newDisplay.setAttribute("class", "row");
         newDisplay.innerHTML = `
-            <img src=${flagToDisplay} alt=${flagAlt}>
-            <div id="display-body">
+            <img class="col-md row-sm" src=${flagToDisplay} alt=${flagAlt}>
+            <div id="display-body" class="container col-md row-sm">            
                 <h2 class="card-title">${nameToDisplay}</h2>
-                <p class="card-text">Native Name: <span class="text">${nativeNameToDisplay}</span></p>
-                <p class="card-text">Population: <span class="text">${populationToDisplay}</span></p>
-                <p class="card-text">Region: <span class="text">${regionToDisplay}</span></p>
-                <p class="card-text">Sub Region: <span class="text">${subregionToDisplay}</span></p>
-                <p class="card-text">Capital: <span class="text">${capitalToDisplay}</span></p>
-                <p class="card-text">Top Level Domain: <span class="text">${topLevelDomainToDisplay}</span></p>
-                <p class="card-text">Currencies: <span class="text">${currenciesToDisplay}</span></p>
-                <p class="card-text">Languages: <span class="text">${languagesToDisplay}</span></p>
+                <div id="text-row" class="row">
+                    <div class="col-md row-sm">
+                        <p class="card-text">Native Name: <span class="text">${nativeNameToDisplay}</span></p>
+                        <p class="card-text">Population: <span class="text">${populationToDisplay}</span></p>
+                        <p class="card-text">Region: <span class="text">${regionToDisplay}</span></p>
+                        <p class="card-text">Sub Region: <span class="text">${subregionToDisplay}</span></p>
+                        <p class="card-text">Capital: <span class="text">${capitalToDisplay}</span></p>
+                    </div>
+                    <div class="col-md row-sm">
+                        <p class="card-text">Top Level Domain: <span class="text">${topLevelDomainToDisplay}</span></p>
+                        <p class="card-text">Currencies: <span class="text">${currenciesToDisplay}</span></p>
+                        <p class="card-text">Languages: <span class="text">${languagesToDisplay}</span></p>
+                    </div>          
+                </div> 
+                <div id="borders">
+                    <p class="card-text">Border Countries: </p>     
+                </div>
             </div>`;
         cardHolder.appendChild(newDisplay);
-        const cardBody = document.getElementById("display-body");
+        const cardBody = document.getElementById("borders");
         console.log(borderCodesArray.length);
         if (borderNamesArray.length > 0) {
             for (let i = 0; i < borderNamesArray.length; i++) {
