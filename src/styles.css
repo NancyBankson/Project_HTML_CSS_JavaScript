@@ -31,7 +31,7 @@ header {
 }
 
 #header-container {
-    margin: 30px 60px 20px;
+    margin: 30px 65px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -43,7 +43,7 @@ header {
 }
 
 #search-bar {
-    margin: 50px 60px 40px;
+    margin: 50px 65px 40px;
     display: flex;
     justify-content: space-between;
 }
@@ -68,11 +68,11 @@ select {
 }
 
 #card-holder {
-    margin: 0 60px 0;
+    margin: 0 0 0 65px;
     display: flex;
     flex-wrap: wrap;
     justify-content: start;
-    gap: 90px;
+    gap: 102px;
 }
 
 .card {
@@ -115,10 +115,14 @@ select {
     display: flex;
     margin: 30px 0 150px 0;
     max-width: 1440px;
+    width: 100%;
+    justify-content: start;
+    gap: 120px;
 }
 
 #display-body {
-    margin: 20px 0px 5px 110px;
+    margin: 20px 0px 5px 0;
+    min-width: 50%;
 }
 
 .big-display img {
@@ -159,8 +163,9 @@ select {
 
 #borders p {
     justify-self: center;
-    padding-top: 8px;
+    padding-top: 4px;
     margin-right: 10px;
+    margin-bottom: 0;
 }
 
 #back-button,
@@ -181,6 +186,7 @@ select {
     padding: 0px 10px;
     min-width: 6rem;
     max-height: 2rem;
+    margin-bottom: 5px;
 }
 
 @media (max-width: 501px) {

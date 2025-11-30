@@ -229,7 +229,10 @@ cardHolder?.addEventListener("click", function () {
             let regionToDisplay = displayCountry.region;
             let subregionToDisplay = displayCountry.subregion;
             let capitalToDisplay = displayCountry.capital;
-            let topLevelDomainToDisplay = displayCountry.tld;
+            let topLevelDomainToDisplay = displayCountry.tld[0];
+            for (let i = 1; i < displayCountry.tld.length; i++) {
+                topLevelDomainToDisplay = topLevelDomainToDisplay + ", " + displayCountry.tld[i];
+            }
             let languagesToDisplay = displayCountry.languages[0];
             for (let i = 1; i < displayCountry.languages.length; i++) {
                 languagesToDisplay = languagesToDisplay + ", " + displayCountry.languages[i];
@@ -279,7 +282,7 @@ cardHolder?.addEventListener("click", function () {
                     </div>          
                 </div> 
                 <div id="borders">
-                    <p class="card-text">Border Countries: </p>     
+                    <p class="button-text">Border Countries: </p>     
                 </div>
             </div>`;
             cardHolder.appendChild(newDisplay);
