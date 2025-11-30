@@ -5,7 +5,7 @@ const cardHolder = document.getElementById("card-holder");
 const searchBar = document.getElementById("search-bar");
 const themeToggle = document.getElementById("theme-toggle");
 const body = document.body;
-const main = document.getElementById("main");
+const header = document.getElementById("header");
 const inputElement = document.getElementById("name-search");
 const selectElement = document.getElementById("region-filter");
 const allCards = document.getElementsByClassName("card");
@@ -19,22 +19,22 @@ let codeArray = [];
 function applyTheme(theme) {
     if (theme === "dark") {
         body.classList.add(darkThemeClass);
-        main.classList.add(darkThemeClass);
+        header.classList.add(darkThemeClass);
         inputElement.classList.add(darkThemeClass);
         selectElement.classList.add(darkThemeClass);
         for (let i = 0; i < allCards.length; i++) {
-            const card = allCards[i]; // Type assertion to HTMLElement
+            const card = allCards[i];
             card.classList.add(darkThemeClass);
         }
         themeToggle.innerText = "☀️ Light Mode";
     }
     else {
         body.classList.remove(darkThemeClass);
-        main.classList.remove(darkThemeClass);
+        header.classList.remove(darkThemeClass);
         inputElement.classList.remove(darkThemeClass);
         selectElement.classList.remove(darkThemeClass);
         for (let i = 0; i < allCards.length; i++) {
-            const card = allCards[i]; // Type assertion to HTMLElement
+            const card = allCards[i];
             card.classList.remove(darkThemeClass);
         }
         themeToggle.innerText = "🌙 Dark Mode";
@@ -74,8 +74,8 @@ window.addEventListener('load', () => {
             newCard.setAttribute("id", idString);
             newCard.innerHTML = `
                     <img src=${flagToDisplay} class="card-img-top" alt=${flagAlt}>
-                    <div class= "card-body" id="${i}"
-                        <h2 class="card-title">${nameToDisplay}<h2>
+                    <div class= "card-body" id="${i}">
+                        <h2 class="card-title">${nameToDisplay}</h2>
                         <p class="card-text">Population: <span class="text">${populationToDisplay}</span></p>
                         <p>Region: <span class="text">${regionToDisplay}</span></p>
                         <p>Capital: <span class="text">${capitalToDisplay}</span></p>
@@ -111,8 +111,8 @@ countrySelector?.addEventListener("change", function () {
             newCard.setAttribute("id", idString);
             newCard.innerHTML = `
                     <img src=${flagToDisplay} class="card-img-top" alt=${flagAlt}>
-                    <div class= "card-body" id="${i}"
-                        <h2 class="card-title">${nameToDisplay}<h2>
+                    <div class= "card-body" id="${i}">
+                        <h2 class="card-title">${nameToDisplay}</h2>
                         <p class="card-text">Population: <span class="text">${populationToDisplay}</span></p>
                         <p>Region: <span class="text">${regionToDisplay}</span></p>
                         <p>Capital: <span class="text">${capitalToDisplay}</span></p>
@@ -147,7 +147,7 @@ regionSelector?.addEventListener("change", function () {
             newCard.innerHTML = `
                     <img src=${flagToDisplay} class="card-img-top" alt=${flagAlt}>
                     <div class= "card-body" id="${i}">
-                        <h2 class="card-title">${nameToDisplay}<h2>
+                        <h2 class="card-title">${nameToDisplay}</h2>
                         <p class="card-text">Population: <span class="text">${populationToDisplay}</span></p>
                         <p>Region: <span class="text">${regionToDisplay}</span></p>
                         <p>Capital: <span class="text">${capitalToDisplay}</span></p>
@@ -183,6 +183,9 @@ cardHolder?.addEventListener("click", function () {
     let id = -1;
     if (divId != "") {
         id = parseInt(divId);
+    }
+    else if (buttonId === "") {
+        return;
     }
     cardHolder.innerHTML = "";
     searchBar.innerHTML = "";
@@ -244,20 +247,19 @@ cardHolder?.addEventListener("click", function () {
         });
         let newDisplay = document.createElement("div");
         newDisplay.setAttribute("class", "big-display");
-        newDisplay.setAttribute("class", "row");
         newDisplay.innerHTML = `
-            <img class="col-md row-sm" src=${flagToDisplay} alt=${flagAlt}>
-            <div id="display-body" class="container col-md row-sm">            
+            <img src=${flagToDisplay} alt=${flagAlt}>
+            <div id="display-body">            
                 <h2 class="card-title">${nameToDisplay}</h2>
-                <div id="text-row" class="row">
-                    <div class="col-md row-sm">
+                <div id="text-row">
+                    <div>
                         <p class="card-text">Native Name: <span class="text">${nativeNameToDisplay}</span></p>
                         <p class="card-text">Population: <span class="text">${populationToDisplay}</span></p>
                         <p class="card-text">Region: <span class="text">${regionToDisplay}</span></p>
                         <p class="card-text">Sub Region: <span class="text">${subregionToDisplay}</span></p>
                         <p class="card-text">Capital: <span class="text">${capitalToDisplay}</span></p>
                     </div>
-                    <div class="col-md row-sm">
+                    <div id="second-col">
                         <p class="card-text">Top Level Domain: <span class="text">${topLevelDomainToDisplay}</span></p>
                         <p class="card-text">Currencies: <span class="text">${currenciesToDisplay}</span></p>
                         <p class="card-text">Languages: <span class="text">${languagesToDisplay}</span></p>
