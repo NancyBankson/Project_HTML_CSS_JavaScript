@@ -80,12 +80,18 @@ select {
     max-width: 17rem;
     max-height: 40rem;
     margin: 10px 0px;
+    border: 1px solid transparent;
     box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.1);
     border-radius: 3px;
 }
 
 .card-body {
     margin-bottom: 20px;
+}
+
+.card img {
+    border-bottom: 1px solid transparent;
+    box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.1);
 }
 
 .card-body h2 {
@@ -107,6 +113,8 @@ select {
 
 .big-display {
     display: flex;
+    margin: 30px 0 150px 0;
+    max-width: 1440px;
 }
 
 #display-body {
@@ -114,7 +122,7 @@ select {
 }
 
 .big-display img {
-    min-width: 700px;
+    min-width: 600px;
     height: auto;
 }
 
@@ -138,10 +146,15 @@ select {
     display: flex;
 }
 
+#text-row div {
+    width: 50%;
+}
+
 #borders {
     display: flex;
     flex-direction: row;
     gap: 8px;
+    flex-wrap: wrap;
 }
 
 #borders p {
@@ -154,12 +167,13 @@ select {
 .new-country {
     background-color: hsl(0, 0%, 99%);
     font-size: 1rem;
+    border-radius: 3px;
     border: 1px solid transparent;
     box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.1);
 }
 
 #back-button {
-    padding: 8px 35px;
+    padding: 9px 35px;
     margin: 10px 0px;
 }
 

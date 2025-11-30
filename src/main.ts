@@ -70,7 +70,8 @@ window.addEventListener('load', () => {
                 let flagToDisplay = country.flags.png;
                 let flagAlt = country.flags.alt;
                 let nameToDisplay = country.name.common;
-                let populationToDisplay = country.population;
+                let populationToNumberDisplay = country.population;
+                let populationToDisplay = populationToNumberDisplay.toLocaleString();
                 let regionToDisplay = country.region;
                 let capitalToDisplay = country.capital;
                 let newCard = document.createElement("card");
@@ -105,7 +106,8 @@ countrySelector?.addEventListener("change", function () {
         let flagToDisplay = filterCountry.flags.png;
         let flagAlt = filterCountry.flags.alt;
         let nameToDisplay = filterCountry.name.common;
-        let populationToDisplay = filterCountry.population;
+        let populationToNumberDisplay = filterCountry.population;
+        let populationToDisplay = populationToNumberDisplay.toLocaleString();
         let regionToDisplay = filterCountry.region;
         let capitalToDisplay = filterCountry.capital;
         let compareName: string = countrySelector.value;
@@ -140,7 +142,8 @@ regionSelector?.addEventListener("change", function () {
         let flagToDisplay = filterCountry.flags.png;
         let flagAlt = filterCountry.flags.alt;
         let nameToDisplay = filterCountry.name.common;
-        let populationToDisplay = filterCountry.population;
+        let populationToNumberDisplay = filterCountry.population;
+        let populationToDisplay = populationToNumberDisplay.toLocaleString();
         let regionToDisplay = filterCountry.region;
         let capitalToDisplay = filterCountry.capital;
         let compareRegion: string = regionSelector.value;
@@ -221,7 +224,8 @@ cardHolder?.addEventListener("click", function () {
             for (let i = 1; i < displayCountry.currencies.length; i++) {
                 currenciesToDisplay = currenciesToDisplay + ", " + displayCountry.currencies[i];
             }
-            let populationToDisplay = displayCountry.population;
+            let populationToNumberDisplay = displayCountry.population;
+            let populationToDisplay = populationToNumberDisplay.toLocaleString();
             let regionToDisplay = displayCountry.region;
             let subregionToDisplay = displayCountry.subregion;
             let capitalToDisplay = displayCountry.capital;
