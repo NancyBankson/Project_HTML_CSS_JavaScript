@@ -11,6 +11,8 @@ const header: HTMLElement | null = document.getElementById("header");
 const inputElement: HTMLElement | null = document.getElementById("name-search");
 const selectElement: HTMLElement | null = document.getElementById("region-filter");
 const allCards = document.getElementsByClassName("card");
+const backButton: HTMLElement | null = document.getElementById("back-button");
+const allButtons = document.getElementsByClassName("new-country");
 const darkThemeClass: string = "dark-mode";
 const localStorageKey: string = "theme-preference";
 const savedTheme = localStorage.getItem(localStorageKey);
@@ -25,9 +27,14 @@ function applyTheme(theme: string) {
         header!.classList.add(darkThemeClass);
         inputElement!.classList.add(darkThemeClass);
         selectElement!.classList.add(darkThemeClass);
+        backButton!.classList.add(darkThemeClass);
         for (let i = 0; i < allCards.length; i++) {
             const card = allCards[i] as HTMLElement;
             card.classList.add(darkThemeClass);
+        }
+        for (let i = 0; i < allButtons.length; i++) {
+            const countryButton = allButtons[i] as HTMLElement;
+            countryButton.classList.add(darkThemeClass);
         }
         themeToggle!.innerText = "☀️ Light Mode";
     } else {
@@ -35,9 +42,14 @@ function applyTheme(theme: string) {
         header!.classList.remove(darkThemeClass);
         inputElement!.classList.remove(darkThemeClass);
         selectElement!.classList.remove(darkThemeClass);
+        backButton!.classList.remove(darkThemeClass);
         for (let i = 0; i < allCards.length; i++) {
             const card = allCards[i] as HTMLElement;
             card.classList.remove(darkThemeClass);
+        }
+         for (let i = 0; i < allButtons.length; i++) {
+            const countryButton = allButtons[i] as HTMLElement;
+            countryButton.classList.remove(darkThemeClass);
         }
         themeToggle!.innerText = "🌙 Dark Mode";
     }
@@ -253,7 +265,12 @@ cardHolder?.addEventListener("click", function () {
 
             let newButton = document.createElement("button");
             newButton.setAttribute("id", "back-button");
-            newButton.innerText = "<-- Back"
+            newButton.innerText = "<-- Back";
+            if (savedTheme === "dark") {
+                newButton!.classList.add(darkThemeClass);
+            } else {
+                newButton!.classList.remove(darkThemeClass);
+            }
             searchBar?.appendChild(newButton);
 
             const backButton: HTMLElement | null = document.getElementById("back-button");
@@ -294,6 +311,11 @@ cardHolder?.addEventListener("click", function () {
                     newBorderButton.textContent = borderNamesArray[i]!;
                     newBorderButton.setAttribute("class", "new-country");
                     newBorderButton.setAttribute("id", borderCodesArray[i]!);
+                    if (savedTheme === "dark") {
+                        newBorderButton!.classList.add(darkThemeClass);
+                    } else {
+                        newBorderButton!.classList.remove(darkThemeClass);
+                    }
                     cardBody?.appendChild(newBorderButton);
                 }
             }

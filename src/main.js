@@ -9,6 +9,8 @@ const header = document.getElementById("header");
 const inputElement = document.getElementById("name-search");
 const selectElement = document.getElementById("region-filter");
 const allCards = document.getElementsByClassName("card");
+const backButton = document.getElementById("back-button");
+const allButtons = document.getElementsByClassName("new-country");
 const darkThemeClass = "dark-mode";
 const localStorageKey = "theme-preference";
 const savedTheme = localStorage.getItem(localStorageKey);
@@ -22,9 +24,14 @@ function applyTheme(theme) {
         header.classList.add(darkThemeClass);
         inputElement.classList.add(darkThemeClass);
         selectElement.classList.add(darkThemeClass);
+        backButton.classList.add(darkThemeClass);
         for (let i = 0; i < allCards.length; i++) {
             const card = allCards[i];
             card.classList.add(darkThemeClass);
+        }
+        for (let i = 0; i < allButtons.length; i++) {
+            const countryButton = allButtons[i];
+            countryButton.classList.add(darkThemeClass);
         }
         themeToggle.innerText = "☀️ Light Mode";
     }
@@ -33,9 +40,14 @@ function applyTheme(theme) {
         header.classList.remove(darkThemeClass);
         inputElement.classList.remove(darkThemeClass);
         selectElement.classList.remove(darkThemeClass);
+        backButton.classList.remove(darkThemeClass);
         for (let i = 0; i < allCards.length; i++) {
             const card = allCards[i];
             card.classList.remove(darkThemeClass);
+        }
+        for (let i = 0; i < allButtons.length; i++) {
+            const countryButton = allButtons[i];
+            countryButton.classList.remove(darkThemeClass);
         }
         themeToggle.innerText = "🌙 Dark Mode";
     }
@@ -247,6 +259,12 @@ cardHolder?.addEventListener("click", function () {
         let newButton = document.createElement("button");
         newButton.setAttribute("id", "back-button");
         newButton.innerText = "<-- Back";
+        if (savedTheme === "dark") {
+            newButton.classList.add(darkThemeClass);
+        }
+        else {
+            newButton.classList.remove(darkThemeClass);
+        }
         searchBar?.appendChild(newButton);
         const backButton = document.getElementById("back-button");
         backButton?.addEventListener("click", function () {
@@ -285,6 +303,12 @@ cardHolder?.addEventListener("click", function () {
                 newBorderButton.textContent = borderNamesArray[i];
                 newBorderButton.setAttribute("class", "new-country");
                 newBorderButton.setAttribute("id", borderCodesArray[i]);
+                if (savedTheme === "dark") {
+                    newBorderButton.classList.add(darkThemeClass);
+                }
+                else {
+                    newBorderButton.classList.remove(darkThemeClass);
+                }
                 cardBody?.appendChild(newBorderButton);
             }
         }
