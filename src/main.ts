@@ -309,6 +309,7 @@ cardHolder?.addEventListener("click", function () {
                     newBorderButton.textContent = borderNamesArray[i]!;
                     newBorderButton.setAttribute("class", "new-country");
                     newBorderButton.setAttribute("id", borderCodesArray[i]!);
+                    newBorderButton.setAttribute("role", "button");
                     if (savedTheme === "dark") {
                         newBorderButton!.classList.add(darkThemeClass);
                     } else {
