@@ -1,7 +1,6 @@
 
 import { fetchData, fetchCodes } from "./services/apiService.js";
 import { Country, Codes } from "./models/Country.js";
-// import { CurrencyName } from "./models/Country.js";
 
 const cardHolder: HTMLElement | null = document.getElementById("card-holder");
 const searchBar: HTMLElement | null = document.getElementById("search-bar");
@@ -11,8 +10,6 @@ const header: HTMLElement | null = document.getElementById("header");
 const inputElement: HTMLElement | null = document.getElementById("name-search");
 const selectElement: HTMLElement | null = document.getElementById("region-filter");
 const allCards = document.getElementsByClassName("card");
-const backButton: HTMLElement | null = document.getElementById("back-button");
-const allButtons = document.getElementsByClassName("new-country");
 const darkThemeClass: string = "dark-mode";
 const localStorageKey: string = "theme-preference";
 const savedTheme = localStorage.getItem(localStorageKey);
@@ -22,12 +19,16 @@ let countryArray: Country[] = [];
 let codeArray: Codes[] = [];
 
 function applyTheme(theme: string) {
+    const backButton: HTMLElement | null = document.getElementById("back-button");
+    const allButtons = document.getElementsByClassName("new-country");
     if (theme === "dark") {
         body!.classList.add(darkThemeClass);
         header!.classList.add(darkThemeClass);
         inputElement!.classList.add(darkThemeClass);
         selectElement!.classList.add(darkThemeClass);
-        backButton!.classList.add(darkThemeClass);
+        if (backButton) {
+            backButton!.classList.add(darkThemeClass);
+        }
         for (let i = 0; i < allCards.length; i++) {
             const card = allCards[i] as HTMLElement;
             card.classList.add(darkThemeClass);
@@ -42,12 +43,14 @@ function applyTheme(theme: string) {
         header!.classList.remove(darkThemeClass);
         inputElement!.classList.remove(darkThemeClass);
         selectElement!.classList.remove(darkThemeClass);
-        backButton!.classList.remove(darkThemeClass);
+        if (backButton) {
+            backButton!.classList.remove(darkThemeClass);
+        }
         for (let i = 0; i < allCards.length; i++) {
             const card = allCards[i] as HTMLElement;
             card.classList.remove(darkThemeClass);
         }
-         for (let i = 0; i < allButtons.length; i++) {
+        for (let i = 0; i < allButtons.length; i++) {
             const countryButton = allButtons[i] as HTMLElement;
             countryButton.classList.remove(darkThemeClass);
         }
@@ -65,11 +68,10 @@ themeToggle?.addEventListener("click", function () {
 window.addEventListener('load', () => {
 
     // Check for saved theme preference on page load
-
     if (savedTheme) {
         applyTheme(savedTheme);
     } else {
-        // Optional: Set a default theme if no preference is saved
+        // Set a default theme if no preference is saved
         applyTheme("light");
     }
     fetchData()
@@ -110,8 +112,6 @@ window.addEventListener('load', () => {
 })
 
 countrySelector?.addEventListener("change", function () {
-    console.log(savedTheme);
-    console.log("hi");
     cardHolder!.innerHTML = "";
     for (let i = 0; i < countryArray.length; i++) {
         const filterCountry = new Country(countryArray[i]!.flags, countryArray[i]!.name, countryArray[i]!.currencies, countryArray[i]!.capital, countryArray[i]!.region, countryArray[i]!.subregion, countryArray[i]!.languages, countryArray[i]!.borders, countryArray[i]!.population, countryArray[i]!.tld, []);
@@ -250,7 +250,6 @@ cardHolder?.addEventListener("click", function () {
                 languagesToDisplay = languagesToDisplay + ", " + displayCountry.languages[i];
             }
             let borderCodesArray = displayCountry.borders;
-            console.log(borderCodesArray);
             let borderNamesArray = [];
             for (let i = 0; i < borderCodesArray.length; i++) {
                 let codeFromTarget = borderCodesArray[i];
@@ -258,14 +257,14 @@ cardHolder?.addEventListener("click", function () {
                     let codeToCompare = codeArray[j]!.cca3;
                     if (codeFromTarget === codeToCompare) {
                         borderNamesArray.push(countryArray[j]?.name.common);
-                        console.log(countryArray[j]?.name.common);
                     }
                 }
             }
 
             let newButton = document.createElement("button");
             newButton.setAttribute("id", "back-button");
-            newButton.innerText = "<-- Back";
+            newButton.setAttribute("class", "back");
+            newButton.innerText = "←  Back";
             if (savedTheme === "dark") {
                 newButton!.classList.add(darkThemeClass);
             } else {
@@ -304,7 +303,6 @@ cardHolder?.addEventListener("click", function () {
             </div>`;
             cardHolder.appendChild(newDisplay);
             const cardBody: HTMLElement | null = document.getElementById("borders");
-            console.log(borderCodesArray.length);
             if (borderNamesArray.length > 0) {
                 for (let i = 0; i < borderNamesArray.length; i++) {
                     let newBorderButton = document.createElement("button");

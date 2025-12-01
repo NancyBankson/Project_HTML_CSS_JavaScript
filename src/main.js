@@ -1,6 +1,5 @@
 import { fetchData, fetchCodes } from "./services/apiService.js";
 import { Country, Codes } from "./models/Country.js";
-// import { CurrencyName } from "./models/Country.js";
 const cardHolder = document.getElementById("card-holder");
 const searchBar = document.getElementById("search-bar");
 const themeToggle = document.getElementById("theme-toggle");
@@ -9,8 +8,6 @@ const header = document.getElementById("header");
 const inputElement = document.getElementById("name-search");
 const selectElement = document.getElementById("region-filter");
 const allCards = document.getElementsByClassName("card");
-const backButton = document.getElementById("back-button");
-const allButtons = document.getElementsByClassName("new-country");
 const darkThemeClass = "dark-mode";
 const localStorageKey = "theme-preference";
 const savedTheme = localStorage.getItem(localStorageKey);
@@ -19,12 +16,16 @@ let countrySelector = document.getElementById("name-search");
 let countryArray = [];
 let codeArray = [];
 function applyTheme(theme) {
+    const backButton = document.getElementById("back-button");
+    const allButtons = document.getElementsByClassName("new-country");
     if (theme === "dark") {
         body.classList.add(darkThemeClass);
         header.classList.add(darkThemeClass);
         inputElement.classList.add(darkThemeClass);
         selectElement.classList.add(darkThemeClass);
-        backButton.classList.add(darkThemeClass);
+        if (backButton) {
+            backButton.classList.add(darkThemeClass);
+        }
         for (let i = 0; i < allCards.length; i++) {
             const card = allCards[i];
             card.classList.add(darkThemeClass);
@@ -40,7 +41,9 @@ function applyTheme(theme) {
         header.classList.remove(darkThemeClass);
         inputElement.classList.remove(darkThemeClass);
         selectElement.classList.remove(darkThemeClass);
-        backButton.classList.remove(darkThemeClass);
+        if (backButton) {
+            backButton.classList.remove(darkThemeClass);
+        }
         for (let i = 0; i < allCards.length; i++) {
             const card = allCards[i];
             card.classList.remove(darkThemeClass);
@@ -64,7 +67,7 @@ window.addEventListener('load', () => {
         applyTheme(savedTheme);
     }
     else {
-        // Optional: Set a default theme if no preference is saved
+        // Set a default theme if no preference is saved
         applyTheme("light");
     }
     fetchData()
@@ -105,8 +108,6 @@ window.addEventListener('load', () => {
         .catch(error => console.error("Fetch error:", error));
 });
 countrySelector?.addEventListener("change", function () {
-    console.log(savedTheme);
-    console.log("hi");
     cardHolder.innerHTML = "";
     for (let i = 0; i < countryArray.length; i++) {
         const filterCountry = new Country(countryArray[i].flags, countryArray[i].name, countryArray[i].currencies, countryArray[i].capital, countryArray[i].region, countryArray[i].subregion, countryArray[i].languages, countryArray[i].borders, countryArray[i].population, countryArray[i].tld, []);
@@ -244,7 +245,6 @@ cardHolder?.addEventListener("click", function () {
             languagesToDisplay = languagesToDisplay + ", " + displayCountry.languages[i];
         }
         let borderCodesArray = displayCountry.borders;
-        console.log(borderCodesArray);
         let borderNamesArray = [];
         for (let i = 0; i < borderCodesArray.length; i++) {
             let codeFromTarget = borderCodesArray[i];
@@ -252,13 +252,13 @@ cardHolder?.addEventListener("click", function () {
                 let codeToCompare = codeArray[j].cca3;
                 if (codeFromTarget === codeToCompare) {
                     borderNamesArray.push(countryArray[j]?.name.common);
-                    console.log(countryArray[j]?.name.common);
                 }
             }
         }
         let newButton = document.createElement("button");
         newButton.setAttribute("id", "back-button");
-        newButton.innerText = "<-- Back";
+        newButton.setAttribute("class", "back");
+        newButton.innerText = "←  Back";
         if (savedTheme === "dark") {
             newButton.classList.add(darkThemeClass);
         }
@@ -296,7 +296,6 @@ cardHolder?.addEventListener("click", function () {
             </div>`;
         cardHolder.appendChild(newDisplay);
         const cardBody = document.getElementById("borders");
-        console.log(borderCodesArray.length);
         if (borderNamesArray.length > 0) {
             for (let i = 0; i < borderNamesArray.length; i++) {
                 let newBorderButton = document.createElement("button");
